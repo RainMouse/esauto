@@ -4,7 +4,7 @@ import numpy as np
 import time
 
 class AdbUtiles():
-    def __init__(self, config):
+    def __init__(self):
         self.adb = adbutils.adb.device()
 
     def screenshot(self):
@@ -19,14 +19,17 @@ class AdbUtiles():
         self.adb.click(coordinate[0], coordinate[1])
         time.sleep(0.7)
 
-    def swip():
-        adb.swipe(600, 200, 300, 500, 0.5)
+    def swip(self):
+        self.adb.swipe(600, 200, 300, 500, 0.5)
         time.sleep(0.7)
         print("haha")       
 
 
 
-# adb = adbutils.AdbClient(host="127.0.0.1", port=5555)
+
+# adbs = adbutils.AdbClient(host="127.0.0.1", port=5555)
+
+
 
 
 
@@ -34,7 +37,9 @@ class AdbUtiles():
 
 # raa = recv_all(result)
 
-adb = adbutils.adb.device()
+# ccc = adbutils.adb.device_list()
+
+# adb = adbutils.adb.device()
 
 
 
@@ -52,9 +57,9 @@ adb = adbutils.adb.device()
 # cv2.imshow('gray', gray)
 # cv2.waitKey(0)
 
-ccc = adb.swipe(600, 200, 300, 200, 0.5)
+# ccc = adb.swipe(600, 200, 300, 200, 0.5)
 
-print("haha")
+# print("haha")
 
 
     

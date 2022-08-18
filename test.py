@@ -1,7 +1,29 @@
-import numpy as nm
+import numpy as np
 import imutils
 import cv2
-import bashplotlib.histogram as his
+import adb_utiles as adbu
+
+adb = adbu.AdbUtiles()
+
+back = adb.screenshot()
+
+one = cv2.cvtColor(cv2.imread("C://Users//Administrator//Desktop//pyimg//one.png"), cv2.COLOR_BGR2GRAY)
+two = cv2.cvtColor(cv2.imread("C://Users//Administrator//Desktop//pyimg//two.png"), cv2.COLOR_BGR2GRAY)
+
+oth, otw = one.shape[:2]
+tth, ttw = two.shape[:2]
+
+result_one = cv2.matchTemplate(back, one, cv2.TM_CCOEFF_NORMED)
+result_two = cv2.matchTemplate(back, two, cv2.TM_CCOEFF_NORMED)
+
+_, one_maxval,_ ,one_maxLoc = cv2.minMaxLoc(result_one)
+_, two_maxval,_ ,two_maxLoc = cv2.minMaxLoc(result_two)
+
+clone = np.dstack([back, back, back])
+cv2.rectangle(clone, (one_maxLoc[0], one_maxLoc[1]), (one_maxLoc[0] + otw, one_maxLoc[1] + oth), (0, 0, 255), 2)
+cv2.rectangle(clone, (two_maxLoc[0], two_maxLoc[1]), (two_maxLoc[0] + ttw, two_maxLoc[1] + tth), (0, 0, 255), 2)
+cv2.imshow("Visualize", clone)
+cv2.waitKey(0)
 
 # cc = nm.linspace(0.2, 1.0 , 20)[::-1]
 
@@ -58,5 +80,3 @@ import bashplotlib.histogram as his
 #     ]
 # ]
 
-
-print("\033[31m这是红色字体\033[0m")

@@ -1,9 +1,9 @@
-import adb_utiles as adb
+import adb_utiles as adbu
 import image_contrast as contrast
 import cv2
 import json
 
-adb = adb.AdbUtiles()
+adb = adbu.AdbUtiles()
 templates = {
     'buy' : cv2.cvtColor(cv2.imread("./buy.png"), cv2.COLOR_BGR2GRAY),
     'mystery' : cv2.cvtColor(cv2.imread("./mystery.png"), cv2.COLOR_BGR2GRAY),
