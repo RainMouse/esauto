@@ -27,8 +27,11 @@ config = json.load(open("config/config.json"))
 
 use_diamonds = config['use_diamonds']
 
+is_mystery = 0
+is_covenant = 0
+
 def start():
-    global use_diamonds
+    global use_diamonds, is_mystery, is_covenant
 
     while 1:
         use_diamonds -= 3
@@ -47,7 +50,8 @@ def start():
             maxLoc = result['maxLoc']
             buy_click(maxLoc[0] + tw/2, maxLoc[1] + th/2)
             final_data['refresh'] = final_data['refresh'] + 1
-            
+            is_mystery = 0 
+            is_covenant = 0
             with open("config/result.json", "w") as outfile:
                 json.dump(final_data, outfile)
               
@@ -55,19 +59,26 @@ def start():
             break        
 
 def seek_click():
-    result = contrast.matchTemplate(adb.screenshot(), templates['mystery'])
 
-    if result['state']:
-        maxLoc = result['maxLoc']
-        buy_click([maxLoc[0] + relative_buy['w'], maxLoc[1] + relative_buy['h']])
-        final_data['mystery'] = final_data['mystery'] + 1 
+    global is_mystery, is_covenant
 
-    result = contrast.matchTemplate(adb.screenshot(), templates['covenant'])
+    if is_mystery == 0:
+        result = contrast.matchTemplate(adb.screenshot(), templates['mystery'])
 
-    if result['state']:
-        maxLoc = result['maxLoc']
-        buy_click([maxLoc[0] + relative_buy['w'], maxLoc[1] + relative_buy['h']])
-        final_data['covenant'] = final_data['covenant'] + 1    
+        if result['state']:
+            maxLoc = result['maxLoc']
+            buy_click([maxLoc[0] + relative_buy['w'], maxLoc[1] + relative_buy['h']])
+            final_data['mystery'] = final_data['mystery'] + 1
+            is_mystery = 1 
+
+    if is_covenant == 0:
+        result = contrast.matchTemplate(adb.screenshot(), templates['covenant'])
+
+        if result['state']:
+            maxLoc = result['maxLoc']
+            buy_click([maxLoc[0] + relative_buy['w'], maxLoc[1] + relative_buy['h']])
+            final_data['covenant'] = final_data['covenant'] + 1
+            is_covenant = 1    
 
 def buy_click(x, y):
     for i in range(10):
@@ -80,6 +91,8 @@ def buy_click(x, y):
             if not contrast.matchTemplate(adb.screenshot(), templates['confirm'])['state']:
                 break
 
+if __name__ == "__main__":
+    start()
 
 
 
