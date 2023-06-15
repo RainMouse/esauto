@@ -22,7 +22,7 @@ class AdbUtiles():
     def swip(self):
         self.adb.swipe(1000, 800, 1000, 200, 0.5)
         time.sleep(1)
-        print("haha")       
+              
 
 
 
